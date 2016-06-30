@@ -17,6 +17,23 @@ def get_distinct_key_words(conn):
 	get_cur.close()
 	fw.close()
 
+def get_sum_key_words(conn, file_write):
+	fw = open(file_write, 'w+')
+
+	get_cur = conn.cursor()
+	# insert_cur = conn.cursor()
+
+	get_cur.execute("SELECT `subject_words` FROM `literature` WHERE `subject_words` != ''")
+	# get_cur.execute("SELECT `subject_words` FROM `literature`")
+
+	for row in get_cur:
+		words_string =  (','.join(row.get('subject_words').split())).encode('utf-8') + '\n'
+		# print words_string
+		fw.write(words_string)
+
+	get_cur.close()
+	fw.close()
+
 def get_key_words(conn):
 	get_cur = conn.cursor()
 	insert_cur = conn.cursor()
@@ -46,7 +63,9 @@ def get_key_words(conn):
 def main():
 	conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='', db='forestry_literature', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
 
-	get_distinct_key_words(conn)
+	# get_distinct_key_words(conn)
+
+	get_sum_key_words(conn, 'sum_key_words.csv')
 
 	conn.close()
 
