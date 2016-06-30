@@ -5,15 +5,6 @@ from urllib import quote
 import pymysql.cursors
 import re
 
-# cur.execute("SELECT fromname, toname FROM slink")
-
-# print(cur.description)
-
-# print()
-
-# for row in cur:
-#	 print(row[0], row[1])
-
 
 def match_string(restring, str):
 	pm = re.compile(restring)
@@ -47,7 +38,7 @@ def get_data_information(str, conn):
 	cur = conn.cursor()
 
 	sql_string = "INSERT INTO `literature` (`abstract_number`, `literature_type`, `literature_title`, `responsible_person`, `person_unit`, `parent_literature`, `volume_period`, `page_number`, `year`, `holding_information`, `classification_number`, `subject_words`, `abstract_content`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');" % (abstract_number, literature_type, literature_title, responsible_person, person_unit, parent_literature, volume_period, page_number, year, holding_information, classification_number, subject_words, abstract_content)
-	
+
 	print sql_string
 
 	cur.execute(sql_string)
